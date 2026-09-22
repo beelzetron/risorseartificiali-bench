@@ -9,6 +9,12 @@ A minimal, harness-free benchmark based on the [risorseartificiali.com/skateboar
 
 The script streams the response (SSE), extracts the `<svg>`, and writes it to `results/<model>-<prompt>.svg` next to a JSON metadata file (finish reason, token usage, animation detected). TCP keepalive is patched onto `http.client` so long reasoning phases survive gateway paths that reset idle flows.
 
+## Serving stack
+
+The benchmark runs entirely against a **local AI inference stack** — no cloud APIs involved. The sample results above were produced by `glm-5.3-flash` served with [vLLM](https://github.com/vllm-project/vllm) on a self-hosted NVIDIA DGX Spark (GB10) box in a home lab, exposed as a plain OpenAI-compatible `chat/completions` endpoint on the LAN.
+
+Nothing in the script is tied to that setup: point `--base` / `SKATEBOARD_BASE` at any OpenAI-compatible server (vLLM, llama.cpp, an OpenAI-compatible gateway, etc.) and it works the same.
+
 ## Usage
 
 ```sh
