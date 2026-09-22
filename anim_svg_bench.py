@@ -6,7 +6,7 @@ Sends the verbatim prompt (typos included) to an OpenAI-compatible
 chat/completions endpoint and saves the resulting SVG.
 
 Usage:
-    python3 skateboard_bench.py [--prompt minimal|constrained] [--no-think]
+    python3 anim_svg_bench.py [--bench skateboard|khazad] [--prompt minimal|constrained]
         [--base URL] [--model NAME] [--max-tokens N]
 
 Env: SKATEBOARD_API_KEY or OPENAI_API_KEY (only if the endpoint requires auth).
