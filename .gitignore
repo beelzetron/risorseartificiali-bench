@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Benchmark outputs
+results/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
