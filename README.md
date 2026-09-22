@@ -1,13 +1,16 @@
 # risorseartificiali-bench
 
-A minimal, harness-free benchmark based on the [risorseartificiali.com/skateboard](https://risorseartificiali.com/skateboard) task: send a fixed prompt to any OpenAI-compatible `chat/completions` endpoint and save the animated SVG it produces.
+A minimal, harness-free benchmark suite based on the [risorseartificiali.com](https://risorseartificiali.com) animated-SVG tasks: send a fixed prompt to any OpenAI-compatible `chat/completions` endpoint and save the animated SVG it produces. Ships two benchmarks:
 
-`skateboard_bench.py` ships two prompts:
+- **skateboard** — [risorseartificiali.com/skateboard](https://risorseartificiali.com/skateboard): a man doing skateboard tricks on a pipe, physics-aware.
+- **khazad** — [risorseartificiali.com/khazad](https://risorseartificiali.com/khazad): Gandalf duelling the Balrog on the Bridge of Khazad-dûm.
 
-- **minimal** — the original one-liner, typos included ("*generate an animated svg of a man doing skatevoard tricks on a pipe. Be mindful of the real phisics*").
-- **constrained** — a fully specified variant (half-pipe, recognizable skater + board, aerial trick, pendulum/parabolic physics, SMIL/CSS only, seamless loop).
+Both follow the same pattern as Simon Willison's [pelican benchmark](https://simonwillison.net/2024/Oct/25/pelicans-on-a-bicycle/), animated: each benchmark has two prompt variants:
 
-The script streams the response (SSE), extracts the `<svg>`, and writes it to `results/<model>-<prompt>.svg` next to a JSON metadata file (finish reason, token usage, animation detected). TCP keepalive is patched onto `http.client` so long reasoning phases survive gateway paths that reset idle flows.
+- **minimal** — the original one-liner, typos and all ("*generate an animated svg of a man doing skatevoard tricks on a pipe. Be mindful of the real phisics*").
+- **constrained** — a fully specified variant (scene elements, animation requirements, SMIL/CSS only, seamless loop).
+
+The script streams the response (SSE), extracts the `<svg>`, and writes it to `results/<bench>-<model>-<prompt>.svg` next to a JSON metadata file (finish reason, token usage, animation detected). TCP keepalive is patched onto `http.client` so long reasoning phases survive gateway paths that reset idle flows.
 
 ## Serving stack
 
@@ -18,11 +21,11 @@ Nothing in the script is tied to that setup: point `--base` / `SKATEBOARD_BASE` 
 ## Usage
 
 ```sh
-python3 skateboard_bench.py [--prompt minimal|constrained] [--no-think] \
-    [--base URL] [--model NAME] [--max-tokens N]
+python3 skateboard_bench.py [--bench skateboard|khazad] [--prompt minimal|constrained] \
+    [--no-think] [--base URL] [--model NAME] [--max-tokens N]
 ```
 
-Defaults: `http://localhost:8000/v1`, model `glm-5.3-flash`, 16k max tokens. `--no-think` disables GLM thinking via `chat_template_kwargs`. Auth (if the endpoint requires it): set `SKATEBOARD_API_KEY` or `OPENAI_API_KEY`. Base URL override: `SKATEBOARD_BASE`.
+Defaults: benchmark `skateboard`, prompt `minimal`, `http://localhost:8000/v1`, model `glm-5.3-flash`, 16k max tokens. `--no-think` disables GLM thinking via `chat_template_kwargs`. Auth (if the endpoint requires it): set `SKATEBOARD_API_KEY` or `OPENAI_API_KEY`. Base URL override: `SKATEBOARD_BASE`.
 
 ## Results (glm-5.3-flash)
 

@@ -47,7 +47,40 @@ Constraints:
 - Loop must be seamless (the skater ends where the loop restarts)
 - Include XML comments describing what each group represents"""
 
-PROMPTS = {"minimal": PROMPT_MINIMAL, "constrained": PROMPT_CONSTRAINED}
+PROMPT_KHAZAD_MINIMAL = (
+    "Generate an animated SVG of Gandalf duelling the Balrog on the Bridge of Khazad-dûm."
+)
+
+PROMPT_KHAZAD_CONSTRAINED = """Generate a single self-contained animated SVG (SMIL or CSS animations, no JavaScript, no external resources) depicting Gandalf duelling the Balrog on the Bridge of Khazad-dûm.
+
+The scene must include:
+- A narrow stone bridge spanning a fiery chasm below
+- Gandalf facing the Balrog, staff in one hand and sword in the other
+- The Balrog with visible wings, horns, and a flaming aura
+
+It must animate for at least two animation loops:
+- Flickering flames and glowing light on the Balrog and in the chasm
+- Gandalf's cloak and robe waving
+- A subtle pulsing glow from Gandalf's staff
+- Both figures shifting stance as if clashing
+
+Constraints:
+- Single <svg> code block only, no explanation
+- Loop must be seamless (no jumps when the animation restarts)
+- Include XML comments describing what each group represents"""
+
+BENCHMARKS = {
+    "skateboard": {
+        # Original recursosartificiali.com/skateboard prompts
+        "minimal": PROMPT_MINIMAL,
+        "constrained": PROMPT_CONSTRAINED,
+    },
+    "khazad": {
+        # https://risorseartificiali.com/khazad/
+        "minimal": PROMPT_KHAZAD_MINIMAL,
+        "constrained": PROMPT_KHAZAD_CONSTRAINED,
+    },
+}
 OUTDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 
 # TCP keepalive on every outgoing socket (120s idle, 60s interval, 10 probes).
@@ -147,7 +180,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--base", default=BASE, help="OpenAI-compatible base URL")
-    ap.add_argument("--prompt", choices=PROMPTS, default="minimal")
+    ap.add_argument("--bench", choices=BENCHMARKS, default="skateboard",
+                    help="which benchmark's prompts to use")
+    ap.add_argument("--prompt", choices=["minimal", "constrained"], default="minimal")
     ap.add_argument("--max-tokens", type=int, default=16000)
     ap.add_argument("--no-think", action="store_true",
                     help="disable GLM thinking via chat_template_kwargs")
@@ -158,11 +193,11 @@ def main() -> int:
     model_slug = args.model.split("/")[-1].replace(".", "-")
     if args.no_think:
         model_slug += "-nothink"
-    out_svg = os.path.join(OUTDIR, f"{model_slug}-{args.prompt}.svg")
-    out_meta = os.path.join(OUTDIR, f"{model_slug}-{args.prompt}.json")
+    out_svg = os.path.join(OUTDIR, f"{args.bench}-{model_slug}-{args.prompt}.svg")
+    out_meta = os.path.join(OUTDIR, f"{args.bench}-{model_slug}-{args.prompt}.json")
 
-    print(f"model={args.model} prompt={args.prompt} -> {out_svg}", flush=True)
-    resp = call_llm(base, args.model, PROMPTS[args.prompt], args.max_tokens,
+    print(f"bench={args.bench} model={args.model} prompt={args.prompt} -> {out_svg}", flush=True)
+    resp = call_llm(base, args.model, BENCHMARKS[args.bench][args.prompt], args.max_tokens,
                     extra={"chat_template_kwargs": {"enable_thinking": False}} if args.no_think else None)
 
     choice = resp["choices"][0]
