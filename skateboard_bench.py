@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Skateboard benchmark (risorseartificiali.com/skateboard) via LiteLLM, no harness.
+"""Skateboard benchmark (risorseartificiali.com/skateboard) via any
+OpenAI-compatible endpoint, no harness.
 
 Sends the verbatim prompt (typos included) to an OpenAI-compatible
 chat/completions endpoint and saves the resulting SVG.
@@ -8,7 +9,7 @@ Usage:
     python3 skateboard_bench.py [--prompt minimal|constrained] [--no-think]
         [--base URL] [--model NAME] [--max-tokens N]
 
-Env: LITELLM_KEY / LITELLM_API_KEY (only needed when hitting the gateway).
+Env: SKATEBOARD_API_KEY or OPENAI_API_KEY (only if the endpoint requires auth).
 """
 import argparse
 import datetime as dt
@@ -19,8 +20,8 @@ import socket
 import sys
 import urllib.request
 
-BASE = os.environ.get("SKATEBOARD_BASE", "http://192.168.11.36:8889/v1").rstrip("/")
-KEY = os.environ.get("LITELLM_KEY") or os.environ.get("LITELLM_API_KEY")
+BASE = os.environ.get("SKATEBOARD_BASE", "http://localhost:8000/v1").rstrip("/")
+KEY = os.environ.get("SKATEBOARD_API_KEY") or os.environ.get("OPENAI_API_KEY")
 DEFAULT_MODEL = "glm-5.3-flash"
 
 PROMPT_MINIMAL = (
@@ -50,8 +51,8 @@ PROMPTS = {"minimal": PROMPT_MINIMAL, "constrained": PROMPT_CONSTRAINED}
 OUTDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 
 # TCP keepalive on every outgoing socket (120s idle, 60s interval, 10 probes).
-# Long gateway streams get RST'ed at ~800-950s by an established-flow timer on
-# the WAN path (BGP ECMP / conntrack); keepalive probes pin the flow.
+# Long generations can stall in reasoning phases; proxies/NAT gateways may RST
+# flows that go idle for too long. Keepalive probes pin the connection open.
 import http.client
 
 _orig_connect = http.client.HTTPConnection.connect
@@ -113,7 +114,8 @@ def call_llm(base: str, model: str, prompt: str, max_tokens: int, attempts: int 
                         delta = ch.get("delta", {})
                         if delta.get("content"):
                             content_parts.append(delta["content"])
-                        # LiteLLM uses reasoning_content; raw vLLM uses reasoning
+                        # OpenAI-compatible servers may expose reasoning as
+                        # reasoning_content (LiteLLM-style) or reasoning (raw vLLM)
                         for rk in ("reasoning_content", "reasoning"):
                             if delta.get(rk):
                                 reasoning_parts.append(delta[rk])
