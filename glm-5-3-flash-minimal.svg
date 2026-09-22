@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" width="800" height="560"
+     font-family="ui-sans-serif, system-ui, sans-serif">
+  <title>Halfpipe skateboarder: pendulum flow with projectile airs</title>
+  <desc>Skater modeled as a pendulum on circular transitions (v = sqrt(2 g dh)): fastest at the
+  flatbottom, slowest at the lip, board always tangent to the surface. Excess energy launches him
+  vertically off the coping into a 0.64 s projectile air with a constant-rate 180 spin about the
+  spine axis (board foreshortens in side view). Frictionless, so the 3.35 s cycle loops forever.</desc>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1530"/>
+      <stop offset="0.4" stop-color="#332e58"/>
+      <stop offset="0.72" stop-color="#6d4468"/>
+      <stop offset="1" stop-color="#c98a5e"/>
+    </linearGradient>
+    <linearGradient id="rampG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4d5168"/>
+      <stop offset="1" stop-color="#2b2e41"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#ffd9a0" stop-opacity="0.6"/>
+      <stop offset="0.6" stop-color="#ff9d5c" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ff9d5c" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="bowl">
+      <path d="M 40 200 L 90 200 A 250 250 0 0 0 340 450 L 460 450 A 250 250 0 0 0 710 200 L 760 200 L 760 470 L 40 470 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- scene -->
+  <rect x="0" y="0" width="800" height="472" fill="url(#sky)"/>
+  <g fill="#dfe6ff">
+    <circle cx="60" cy="46" r="1.6" opacity=".9"/><circle cx="132" cy="92" r="1.2" opacity=".6"/>
+    <circle cx="212" cy="34" r="1.4" opacity=".8"/><circle cx="288" cy="76" r="1.1" opacity=".55"/>
+    <circle cx="352" cy="26" r="1.5" opacity=".85"/><circle cx="520" cy="42" r="1.3" opacity=".7"/>
+    <circle cx="592" cy="82" r="1.1" opacity=".5"/><circle cx="662" cy="34" r="1.5" opacity=".85"/>
+    <circle cx="736" cy="68" r="1.2" opacity=".6"/><circle cx="772" cy="126" r="1.1" opacity=".5"/>
+    <circle cx="42" cy="130" r="1.2" opacity=".55"/>
+  </g>
+  <circle cx="400" cy="150" r="95" fill="url(#glow)"/>
+  <circle cx="400" cy="150" r="32" fill="#ffcf8f"/>
+
+  <!-- predicted air columns above the coping -->
+  <g stroke="#ffffff" stroke-opacity=".25" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round">
+    <path d="M 100 192 L 100 114"/><path d="M 700 192 L 700 114"/>
+  </g>
+  <g opacity="0" stroke="#ffd97a" stroke-width="2" fill="none">
+    <animate attributeName="opacity" dur="3.3454s" repeatCount="indefinite"
+      values="0;0;1;0;0;0;1;0;0" keyTimes="0;0.35644;0.40429;0.45214;0.80863;0.85646;0.90428;0.95219;1"/>
+    <circle cx="100" cy="107" r="4.5"/><circle cx="700" cy="107" r="4.5"/>
+  </g>
+
+  <!-- ramp -->
+  <path d="M 40 200 L 90 200 A 250 250 0 0 0 340 450 L 460 450 A 250 250 0 0 0 710 200 L 760 200 L 760 470 L 40 470 Z" fill="url(#rampG)"/>
+  <g clip-path="url(#bowl)">
+    <path d="M 30 260 H 770 M 30 310 H 770 M 30 360 H 770 M 30 410 H 770" stroke="#ffffff" stroke-opacity=".05" stroke-width="1.5"/>
+    <path d="M 84.9 245 A 259 259 0 0 0 340 459 L 460 459 A 259 259 0 0 0 715.1 245" fill="none" stroke="#2e3140" stroke-width="22" opacity=".55"/>
+    <path d="M 73.9 256.5 A 272 272 0 0 0 340 472 L 460 472 A 272 272 0 0 0 726.1 256.6" fill="none" stroke="#000000" stroke-opacity=".25" stroke-width="2.5"/>
+    <g stroke="#20233a" stroke-width="4" stroke-linecap="round" opacity=".55">
+      <path d="M 88 200 L 76 200"/><path d="M 121.8 326 L 111.4 332"/>
+      <path d="M 214 418.2 L 208 428.6"/><path d="M 340 452 L 340 464"/>
+      <path d="M 460 452 L 460 464"/><path d="M 586 418.2 L 592 428.6"/>
+      <path d="M 678.2 326 L 688.6 332"/><path d="M 712 200 L 724 200"/>
+    </g>
+  </g>
+  <!-- riding surface -->
+  <path d="M 90 200 A 250 250 0 0 0 340 450 L 460 450 A 250 250 0 0 0 710 200"
+        fill="none" stroke="#ccd2e2" stroke-width="7" stroke-linecap="round"/>
+  <!-- decks, rails, coping -->
+  <rect x="40" y="193" width="50" height="8" fill="#4c5064"/><rect x="40" y="193" width="50" height="2" fill="#6a6f88"/>
+  <rect x="710" y="193" width="50" height="8" fill="#4c5064"/><rect x="710" y="193" width="50" height="2" fill="#6a6f88"/>
+  <g stroke="#6a6f88" stroke-width="3.5" stroke-linecap="round">
+    <path d="M 50 193 L 50 170 M 80 193 L 80 170 M 46 170 H 84"/>
+    <path d="M 720 193 L 720 170 M 750 193 L 750 170 M 716 170 H 754"/>
+  </g>
+  <circle cx="90" cy="200" r="6" fill="#e3bd57" stroke="#7c6120" stroke-width="1.5"/>
+  <circle cx="710" cy="200" r="6" fill="#e3bd57" stroke="#7c6120" stroke-width="1.5"/>
+
+  <!-- ground + labels -->
+  <rect x="0" y="470" width="800" height="90" fill="#161826"/>
+  <rect x="0" y="469.5" width="800" height="1.5" fill="#2c3046" opacity=".8"/>
+  <text x="400" y="466" text-anchor="middle" font-size="11" fill="#9aa0b8">v max</text>
+  <text x="400" y="543" text-anchor="middle" font-size="12.5" fill="#7e8398">energy swings between height and speed &#8212; max v at the flatbottom, vertical pop off the lip, &#8776;0.64&#8202;s hang time</text>
+  <g opacity=".8" fill="#8b90a8" stroke="#8b90a8">
+    <line x1="40" y1="28" x2="40" y2="52" stroke-width="2.5"/>
+    <path d="M 34 48 L 40 58 L 46 48 Z" stroke="none"/>
+    <text x="52" y="46" font-size="16" font-style="italic" stroke="none">g</text>
+  </g>
+
+  <!-- ================= SKATER ================= -->
+  <g><!-- position along the physically integrated path -->
+    <animateMotion dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+      path="M 100 200 A 240 240 0 0 0 340 440 L 460 440 A 240 240 0 0 0 700 200 L 700 118 L 700 200 A 240 240 0 0 1 460 440 L 340 440 A 240 240 0 0 1 100 200 L 100 118 L 100 200 Z"
+      keyPoints="0;0.03027;0.06053;0.0908;0.12106;0.15133;0.1816;0.2394;0.26967;0.29994;0.3302;0.36047;0.39073;0.421;0.44075;0.4605;0.48025;0.5;0.5303;0.56056;0.59083;0.6211;0.65137;0.68164;0.73943;0.7697;0.79996;0.83023;0.8605;0.89076;0.921;0.94079;0.96054;0.9803;1"
+      keyTimes="0;0.0315;0.0568;0.07886;0.099;0.11807;0.13664;0.17197;0.19054;0.20961;0.22975;0.25181;0.2771;0.30862;0.35644;0.40429;0.45214;0.5;0.53149;0.55679;0.57883;0.59899;0.61805;0.63664;0.67197;0.69045;0.70958;0.72972;0.75182;0.77709;0.80863;0.85646;0.90428;0.95219;1"/>
+    <g><!-- board stays tangent to the transition -->
+      <animateTransform attributeName="transform" type="rotate" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+        values="90;75;60;45;30;15;0;0;-15;-30;-45;-60;-75;-90;-90;-90;-90;-90;-75;-60;-45;-30;-15;0;0;15;30;45;60;75;90;90;90;90;90"
+        keyTimes="0;0.0315;0.0568;0.07886;0.099;0.11807;0.13664;0.17197;0.19054;0.20961;0.22975;0.25181;0.2771;0.30862;0.35644;0.40429;0.45214;0.5;0.53149;0.55679;0.57883;0.59899;0.61805;0.63664;0.67197;0.69045;0.70958;0.72972;0.75182;0.77709;0.80863;0.85646;0.90428;0.95219;1"/>
+      <g><!-- 180 spin about the spine: board foreshortens (cos of spin angle) mid-air -->
+        <animateTransform attributeName="transform" type="scale" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+          values="1 1;1 1;0.35 1;-0.35 1;-1 1;-1 1;-0.35 1;0.35 1;1 1"
+          keyTimes="0;0.30862;0.389;0.419;0.5;0.80863;0.889;0.919;1"/>
+
+        <g opacity="0"><!-- speed streaks at high v -->
+          <animate attributeName="opacity" dur="3.3454s" repeatCount="indefinite"
+            values="0.5;0;0.3;0.7;0;0.45;0;0;0;0.45;0;0.3;0.7;0;0.45;0;0;0;0.5"
+            keyTimes="0;0.099;0.13664;0.1543;0.19054;0.30862;0.35644;0.40429;0.45214;0.5;0.55679;0.63664;0.65429;0.69045;0.80863;0.85646;0.90428;0.95219;1"/>
+          <path d="M -46 -7 L -76 -7" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+          <path d="M -42 3 L -68 3" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- board + legs (board is sucked up for the grab; legs fold) -->
+        <g>
+          <animateTransform attributeName="transform" type="translate" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+            values="0 0;0 0;0 -4;0 -7;0 -4;0 0;0 0;0 -4;0 -7;0 -4;0 0"
+            keyTimes="0;0.30862;0.35644;0.40429;0.45214;0.5;0.80863;0.85646;0.90428;0.95219;1"/>
+          <path d="M -33 -0.5 L -39 -6.5" stroke="#262a35" stroke-width="5" stroke-linecap="round"/>
+          <path d="M 33 -0.5 L 39 -6.5" stroke="#262a35" stroke-width="5" stroke-linecap="round"/>
+          <rect x="-33" y="-1.5" width="66" height="4" rx="2" fill="#262a35"/>
+          <rect x="-33" y="1.6" width="66" height="1.6" rx=".8" fill="#e2543a"/>
+          <rect x="-25" y="2.2" width="10" height="2.6" rx="1" fill="#9aa0b0"/>
+          <rect x="15" y="2.2" width="10" height="2.6" rx="1" fill="#9aa0b0"/>
+          <circle cx="-20" cy="6.5" r="3.5" fill="#f6cf46" stroke="#c9a52e" stroke-width=".8"/>
+          <circle cx="20" cy="6.5" r="3.5" fill="#f6cf46" stroke="#c9a52e" stroke-width=".8"/>
+          <path d="M -14 -2 L -17 -20 L -8 -38" fill="none" stroke="#343850" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="d" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+              values="M -14 -2 L -17 -20 L -8 -38;M -14 -2 L -17 -20 L -8 -38;M -14 -2 L -23 -10 L -8 -20;M -14 -2 L -23 -10 L -8 -20;M -14 -2 L -23 -10 L -8 -20;M -14 -2 L -17 -20 L -8 -38;M -14 -2 L -17 -20 L -8 -38;M -14 -2 L -23 -10 L -8 -20;M -14 -2 L -23 -10 L -8 -20;M -14 -2 L -23 -10 L -8 -20;M -14 -2 L -17 -20 L -8 -38"
+              keyTimes="0;0.30862;0.35644;0.40429;0.45214;0.5;0.80863;0.85646;0.90428;0.95219;1"/>
+          </path>
+          <path d="M 15 -2 L 18 -19 L 6 -37" fill="none" stroke="#343850" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="d" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+              values="M 15 -2 L 18 -19 L 6 -37;M 15 -2 L 18 -19 L 6 -37;M 15 -2 L 24 -8 L 7 -19;M 15 -2 L 24 -8 L 7 -19;M 15 -2 L 24 -8 L 7 -19;M 15 -2 L 18 -19 L 6 -37;M 15 -2 L 18 -19 L 6 -37;M 15 -2 L 24 -8 L 7 -19;M 15 -2 L 24 -8 L 7 -19;M 15 -2 L 24 -8 L 7 -19;M 15 -2 L 18 -19 L 6 -37"
+              keyTimes="0;0.30862;0.35644;0.40429;0.45214;0.5;0.80863;0.85646;0.90428;0.95219;1"/>
+          </path>
+          <path d="M -17.5 -1.5 L -10.5 -1.5" stroke="#eef0f4" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M 11 -1.5 L 18.5 -1.5" stroke="#eef0f4" stroke-width="4.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- upper body: pump extension at the flatbottom, tuck + grab at apex -->
+        <g>
+          <animateTransform attributeName="transform" type="translate" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+            values="0 3;0 2;0 0;0 -4;0 -1;0 -2;0 4;0 6;0 2;0 3;0 2;0 0;0 -4;0 -1;0 -2;0 4;0 6;0 2;0 3"
+            keyTimes="0;0.099;0.13664;0.1543;0.19054;0.30862;0.35644;0.40429;0.45214;0.5;0.55679;0.63664;0.65429;0.69045;0.80863;0.85646;0.90428;0.95219;1"/>
+          <path d="M -6 -60 L -18 -50 L -24 -39" fill="none" stroke="#b8402c" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="d" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+              values="M -6 -60 L -18 -50 L -24 -39;M -6 -60 L -18 -50 L -24 -39;M -6 -60 L -16 -63 L -27 -58;M -6 -60 L -16 -63 L -27 -58;M -6 -60 L -16 -63 L -27 -58;M -6 -60 L -18 -50 L -24 -39;M -6 -60 L -18 -50 L -24 -39;M -6 -60 L -16 -63 L -27 -58;M -6 -60 L -16 -63 L -27 -58;M -6 -60 L -16 -63 L -27 -58;M -6 -60 L -18 -50 L -24 -39"
+              keyTimes="0;0.30862;0.35644;0.40429;0.45214;0.5;0.80863;0.85646;0.90428;0.95219;1"/>
+          </path>
+          <rect x="-9.5" y="-64.5" width="19" height="30" rx="7.5" fill="#e2543a"/>
+          <circle cx="3" cy="-75" r="8.5" fill="#ecb189"/>
+          <path d="M -6.8 -75.8 A 9.8 9.8 0 0 1 12.8 -75.8 L 12.8 -74.2 L -6.8 -74.2 Z" fill="#f6cf46"/>
+          <circle cx="8" cy="-72.4" r="1.1" fill="#262a35"/>
+          <path d="M 6 -60 L 18 -50 L 27 -40" fill="none" stroke="#e2543a" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+            <animate attributeName="d" dur="3.3454s" repeatCount="indefinite" calcMode="linear"
+              values="M 6 -60 L 18 -50 L 27 -40;M 6 -60 L 18 -50 L 27 -40;M 6 -60 L 19 -41 L 9 -18;M 6 -60 L 19 -41 L 9 -18;M 6 -60 L 19 -41 L 9 -18;M 6 -60 L 18 -50 L 27 -40;M 6 -60 L 18 -50 L 27 -40;M 6 -60 L 19 -41 L 9 -18;M 6 -60 L 19 -41 L 9 -18;M 6 -60 L 19 -41 L 9 -18;M 6 -60 L 18 -50 L 27 -40"
+              keyTimes="0;0.30862;0.35644;0.40429;0.45214;0.5;0.80863;0.85646;0.90428;0.95219;1"/>
+          </path>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
